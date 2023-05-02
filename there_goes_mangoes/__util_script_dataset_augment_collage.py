@@ -18,8 +18,8 @@ ITEMS = [x for x in PARAM_SOURCE_FOLDER.iterdir()]
 
 PARAM_OBJECTS_TO_GENERATE = 135
 
-PARAM_COLLAGE_SIZE_LENGTH = 5000
-PARAM_COLLAGE_SIZE_HEIGHT = 5000
+PARAM_COLLAGE_SIZE_LENGTH = 2000
+PARAM_COLLAGE_SIZE_HEIGHT = 2000
 PARAM_COLLAGE_ROWS = 2
 PARAM_COLLAGE_COLS = 2
 
@@ -28,7 +28,7 @@ PARAM_COLLAGE_COL_DEPTH = PARAM_COLLAGE_SIZE_LENGTH // PARAM_COLLAGE_COLS
 
 for count in range(PARAM_OBJECTS_TO_GENERATE):
     
-    object = np.zeros((PARAM_COLLAGE_SIZE_HEIGHT, PARAM_COLLAGE_SIZE_LENGTH, 3))
+    generated = np.zeros((PARAM_COLLAGE_SIZE_HEIGHT, PARAM_COLLAGE_SIZE_LENGTH, 3))
     
     if len(ITEMS) == 0 or len(ITEMS) < (PARAM_COLLAGE_COLS * PARAM_COLLAGE_ROWS):
         break
@@ -36,19 +36,26 @@ for count in range(PARAM_OBJECTS_TO_GENERATE):
     for col in range(PARAM_COLLAGE_COLS):
         for row in range(PARAM_COLLAGE_ROWS):
             
-            loc_begin_x = PARAM_COLLAGE_ROW_DEPTH * row
-            loc_begin_y = PARAM_COLLAGE_COL_DEPTH * col
+            loc_begin_x = PARAM_COLLAGE_COL_DEPTH * col
+            loc_begin_y = PARAM_COLLAGE_ROW_DEPTH * row
             
             capture = cv2.imread(str(ITEMS.pop(random.randint(0, len(ITEMS) - 1))))
             
-            extent_x, extent_y = capture.shape[:-1]
+            extent_y, extent_x = capture.shape[:-1]
             
-            if extent_x > PARAM_COLLAGE_ROW_DEPTH:
+            if extent_y > PARAM_COLLAGE_ROW_DEPTH:
                 capture = capture[:PARAM_COLLAGE_ROW_DEPTH, :, :]
                 
-            if extent_y > PARAM_COLLAGE_COL_DEPTH:
+            if extent_x > PARAM_COLLAGE_COL_DEPTH:
                 capture = capture[:, :PARAM_COLLAGE_COL_DEPTH, :]
                 
-            extent_x, extent_y = capture.shape[:-1]
+            extent_y, extent_x = capture.shape[:-1]
             
+            loc_end_x = loc_begin_x + (PARAM_COLLAGE_COL_DEPTH if extent_x == PARAM_COLLAGE_COL_DEPTH else extent_x)
+            loc_end_y = loc_begin_y + (PARAM_COLLAGE_ROW_DEPTH if extent_y == PARAM_COLLAGE_ROW_DEPTH else extent_y)
             
+            generated[loc_begin_y:loc_end_y, loc_begin_x:loc_end_x, :] = capture[:, :, :]
+            
+    path = PARAM_TARGET_FOLDER.joinpath(f"collage_{count}.png")
+    cv2.imwrite(str(path), generated)
+
