@@ -1,0 +1,9 @@
+name: mango_detection
+names:
+  0: carabao
+  1: flower
+  2: indian
+path: D:/Git/ThereGoesMangoes/data/output
+test: images/test
+train: images/train
+val: images/val

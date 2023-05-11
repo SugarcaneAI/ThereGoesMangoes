@@ -1,0 +1,21 @@
+{
+  "categories": [
+    {
+      "id": 0,
+      "name": "carabao"
+    },
+    {
+      "id": 1,
+      "name": "flower"
+    },
+    {
+      "id": 2,
+      "name": "indian"
+    }
+  ],
+  "info": {
+    "year": 2023,
+    "version": "1.0",
+    "contributor": "Label Studio"
+  }
+}
