@@ -11,10 +11,10 @@ DATASET_NAME = "mango_detection"
 print(f"Processing dataset: {DATASET_NAME}")
 
 # data source folder
-PARAM_TARGET_SOURCE = r"D:\Git\ThereGoesMangoes\data\buffer"
+PARAM_TARGET_SOURCE = str(pl.Path(__file__).parents[1].joinpath("data/buffer"))
 
 # data output folder
-PARAM_TARGET_OUTPUT = r"D:\Git\ThereGoesMangoes\data\output"
+PARAM_TARGET_OUTPUT = str(pl.Path(__file__).parents[1].joinpath("data/output"))
 
 PARAM_TARGET_SOURCE = pl.Path(PARAM_TARGET_SOURCE)
 PARAM_TARGET_OUTPUT = pl.Path(PARAM_TARGET_OUTPUT)
