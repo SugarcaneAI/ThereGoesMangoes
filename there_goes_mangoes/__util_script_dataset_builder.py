@@ -61,6 +61,17 @@ PARAM_DATA_VAL_SIZE = 0.99
 # Testing dataset size ratio
 PARAM_DATA_TEST_SIZE = 1 - PARAM_DATA_VAL_SIZE
 
+# ensure integrity with rebuild
+del labels
+labels = []
+
+for item in images:
+    
+    label = labelpath.joinpath(item.stem + ".txt")
+    if not label.exists():
+        raise RuntimeError(f"Data integrity ensure failed with image [{item.as_posix()}], no matching label [{label.as_posix()}] found.")
+    labels.append(label)
+
 # build datasets
 print(f"Building with {PARAM_DATA_TRAIN_SIZE:.2f}:({PARAM_DATA_VAL_SIZE:.2f}:{PARAM_DATA_TEST_SIZE:.2f}) ratios.")
 
