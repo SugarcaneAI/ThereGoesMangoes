@@ -14,25 +14,26 @@ except:
 
 def main():
     print("script started.")
-    while SENSOR.wait_for_in_range():
-        dist = 0
-        try:
-            dist = SENSOR.distance * 100
-        except: 
-            dist = dist
-            continue
-        print(f"Distance: {dist:.2f} cm", end="\r")
-        if 33 >= (dist) <= 35:
-            R1.on()
-            sleep(0.25)
-            R2.on()
-            sleep(0.25)
-            R2.off()
-            R1.off()
-        else:
-            R2.off()
-            R1.off()
-        sleep(0.5)
+    while True:
+        while SENSOR.wait_for_in_range(1):
+            dist = 0
+            try:
+                dist = SENSOR.distance * 100
+            except: 
+                dist = dist
+                continue
+            print(f"Distance: {dist:.2f} cm", end="\r")
+            if 33 >= (dist) <= 35:
+                R1.on()
+                sleep(0.25)
+                R2.on()
+                sleep(0.25)
+                R2.off()
+                R1.off()
+            else:
+                R2.off()
+                R1.off()
+            sleep(1)
     print("script ended.")
 
 if __name__ == "__main__":
