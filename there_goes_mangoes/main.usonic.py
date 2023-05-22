@@ -15,9 +15,12 @@ except:
 def main():
     print("script started.")
     while True:
+        R1.on()
+        R2.on()
         while not SENSOR.is_active:
             continue
         while SENSOR.wait_for_in_range(1):
+        
             dist = 0
             try:
                 dist = SENSOR.distance * 100
@@ -30,9 +33,6 @@ def main():
                 sleep(0.25)
                 R2.off()
                 sleep(0.25)
-                R2.on()
-                R1.on()
-            else:
                 R2.on()
                 R1.on()
             sleep(1)
