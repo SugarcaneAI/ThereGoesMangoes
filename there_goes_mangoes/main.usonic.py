@@ -8,6 +8,7 @@ R2.off()
 R1.off()
 
 SENSOR = gpio.DistanceSensor(echo=24, trigger=23)
+sleep(1)
 
 R2.on()
 R1.on()
