@@ -21,7 +21,8 @@ def main():
         try:
             dist = SENSOR.distance * 100
         except:
-            SENSOR = gpio.DistanceSensor(echo=18, trigger=17, pin_factory=factory, partial=True)
+            sleep(1)
+            dist = SENSOR.distance * 100
             continue
         print(f"Distance: {dist:.2f} cm")
         if 33 >= (dist) <= 35:
