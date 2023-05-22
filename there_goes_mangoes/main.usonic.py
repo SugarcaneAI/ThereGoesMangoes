@@ -7,10 +7,12 @@ R1 = gpio.DigitalOutputDevice(21, initial_value=1)
 R2 = gpio.DigitalOutputDevice(20, initial_value=1)
 
 try:
-    SENSOR = gpio.DistanceSensor(echo=18, trigger=17, pin_factory=factory, partial=True)
+    SENSOR = gpio.DistanceSensor(echo=18, trigger=17, #pin_factory=factory, 
+                                 partial=True)
 except:
     sleep(1)
-    SENSOR = gpio.DistanceSensor(echo=18, trigger=17, pin_factory=factory, partial=True)
+    SENSOR = gpio.DistanceSensor(echo=18, trigger=17, #pin_factory=factory, 
+                                 partial=True)
 
 def main():
     print("script started.")
