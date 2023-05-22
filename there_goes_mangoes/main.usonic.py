@@ -7,7 +7,7 @@ R2 = gpio.DigitalOutputDevice(20, initial_value=1)
 R2.off()
 R1.off()
 
-SENSOR = gpio.DistanceSensor(echo=24, trigger=23)
+SENSOR = gpio.DistanceSensor(echo=5, trigger=4)
 
 R2.on()
 R1.on()
