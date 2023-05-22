@@ -1,7 +1,7 @@
 import gpiozero as gpio
 from time import sleep
 
-SENSOR = gpio.DistanceSensor(echo=24, trig=23)
+SENSOR = gpio.DistanceSensor(echo=24, trigger=23)
 R1 = gpio.DigitalOutputDevice(21, initial_value=1)
 R2 = gpio.DigitalOutputDevice(20, initial_value=1)
 
