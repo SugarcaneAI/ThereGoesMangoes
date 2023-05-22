@@ -14,7 +14,7 @@ except:
 
 def main():
     while True:
-        while not SENSOR.wait_for_out_of_range():
+        while SENSOR.wait_for_in_range():
             dist = 0
             try:
                 dist = SENSOR.distance * 100
