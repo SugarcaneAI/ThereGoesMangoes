@@ -14,7 +14,10 @@ except:
 
 def main():
     while True:
-        dist = SENSOR.distance * 100
+        try:
+            dist = SENSOR.distance * 100
+        except:
+            continue
         print(f"Distance: {dist:.2f} cm", end="\r")
         if 33 >= (dist) <= 35:
             R1.on()
