@@ -36,7 +36,7 @@ def main():
                 R1.on()
                 sleep(1)
                 R2.on()
-            sleep(1)
+            sleep(0.25)
     print("script ended.")
 
 if __name__ == "__main__":
