@@ -26,15 +26,15 @@ def main():
                 continue
             print(f"Distance: {dist:.2f} cm", end="\r")
             if 33 >= (dist) <= 35:
-                R1.on()
+                R1.off()
+                sleep(0.25)
+                R2.off()
                 sleep(0.25)
                 R2.on()
-                sleep(0.25)
-                R2.off()
-                R1.off()
+                R1.on()
             else:
-                R2.off()
-                R1.off()
+                R2.on()
+                R1.on()
             sleep(1)
     print("script ended.")
 
