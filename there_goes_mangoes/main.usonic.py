@@ -22,7 +22,7 @@ def main():
             sleep(1)
             dist = SENSOR.distance * 100
             continue
-        print(f"Distance: {dist:.2f} cm")
+        print(f"Distance: {dist:.2f} cm : {R2.value}")
         if 33 <= dist and dist <= 35:
             R2.off()
             sleep(1)
