@@ -13,11 +13,11 @@ except:
     SENSOR = gpio.DistanceSensor(echo=18, trigger=17, pin_factory=factory, partial=True)
 
 def main():
-    while True:
+    while SENSOR.wait_for_in_range():
         dist = 0
         try:
             dist = SENSOR.distance * 100
-        except:
+        except: 
             dist = dist
             continue
         print(f"Distance: {dist:.2f} cm", end="\r")
