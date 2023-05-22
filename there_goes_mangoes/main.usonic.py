@@ -15,8 +15,8 @@ except:
 def main():
     print("script started.")
     while True:
-        R1.on()
-        R2.on()
+        R1.off()
+        R2.off()
         while not SENSOR.is_active:
             continue
         while SENSOR.wait_for_in_range(1):
@@ -29,13 +29,13 @@ def main():
                 continue
             print(f"Distance: {dist:.2f} cm", end="\r")
             if 33 >= (dist) <= 35:
-                R1.off()
-                sleep(1)
-                R2.off()
-                sleep(1)
                 R1.on()
                 sleep(1)
                 R2.on()
+                sleep(1)
+                R1.off()
+                sleep(1)
+                R2.off()
             sleep(0.25)
     print("script ended.")
 
