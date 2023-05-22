@@ -15,8 +15,8 @@ except:
 def main():
     print("script started.")
     while True:
-        R1.off()
-        R2.off()
+        R1.on()
+        R2.on()
         dist = 0
         try:
             dist = SENSOR.distance * 100
@@ -24,13 +24,13 @@ def main():
             continue
         print(f"Distance: {dist:.2f} cm")
         if 33 >= (dist) <= 35:
-            R1.on()
-            sleep(1)
-            R2.on()
-            sleep(1)
             R1.off()
             sleep(1)
             R2.off()
+            sleep(1)
+            R1.on()
+            sleep(1)
+            R2.on()
             sleep(0.25)
     print("script ended.")
 
