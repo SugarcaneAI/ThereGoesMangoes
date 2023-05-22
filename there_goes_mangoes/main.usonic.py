@@ -30,9 +30,9 @@ def main():
             print(f"Distance: {dist:.2f} cm", end="\r")
             if 33 >= (dist) <= 35:
                 R1.off()
-                sleep(0.25)
+                sleep(1)
                 R2.off()
-                sleep(0.25)
+                sleep(1)
                 R2.on()
                 R1.on()
             sleep(1)
