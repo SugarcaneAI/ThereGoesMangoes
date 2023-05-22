@@ -3,8 +3,8 @@ from time import sleep
 
 factory = gpio.pins.pigpio.PiGPIOFactory()
 
-R1 = gpio.DigitalOutputDevice(21, initial_value=1)
-R2 = gpio.DigitalOutputDevice(20, initial_value=1)
+R1 = gpio.DigitalOutputDevice(21, initial_value=0)
+R2 = gpio.DigitalOutputDevice(20, initial_value=0)
 
 try:
     SENSOR = gpio.DistanceSensor(echo=18, trigger=17, pin_factory=factory, partial=True)
