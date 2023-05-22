@@ -7,7 +7,12 @@ R2 = gpio.DigitalOutputDevice(20, initial_value=1)
 R2.off()
 R1.off()
 
+<<<<<<< HEAD
 SENSOR = gpio.DistanceSensor(echo=5, trigger=4)
+=======
+SENSOR = gpio.DistanceSensor(echo=24, trigger=23)
+sleep(1)
+>>>>>>> 4308dd8ee100f445da22f5e190401faf6a17ee04
 
 R2.on()
 R1.on()
