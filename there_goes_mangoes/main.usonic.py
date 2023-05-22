@@ -33,8 +33,9 @@ def main():
                 sleep(1)
                 R2.off()
                 sleep(1)
-                R2.on()
                 R1.on()
+                sleep(1)
+                R2.on()
             sleep(1)
     print("script ended.")
 
