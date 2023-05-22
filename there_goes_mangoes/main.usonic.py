@@ -3,7 +3,6 @@ from time import sleep
 
 factory = gpio.pins.pigpio.PiGPIOFactory()
 
-R1 = gpio.DigitalOutputDevice(21, initial_value=1)
 R2 = gpio.DigitalOutputDevice(20, initial_value=1)
 
 try:
@@ -15,7 +14,6 @@ except:
 def main():
     print("script started.")
     while True:
-        R1.on()
         R2.on()
         dist = 0
         try:
@@ -25,12 +23,8 @@ def main():
             dist = SENSOR.distance * 100
             continue
         print(f"Distance: {dist:.2f} cm")
-        if 33 >= (dist) <= 35:
-            R1.off()
-            sleep(1)
+        if 33 <= dist and dist <= 35:
             R2.off()
-            sleep(1)
-            R1.on()
             sleep(1)
             R2.on()
             sleep(0.25)
