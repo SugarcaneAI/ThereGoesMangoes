@@ -13,10 +13,9 @@ while not cam.isOpened():
     
 SENSOR = gpio.Button(21)
 
-color = (0, 0, 255)
 while True:
     
-    
+    color = (0, 0, 255)
     
     _, image = cam.read()
     
