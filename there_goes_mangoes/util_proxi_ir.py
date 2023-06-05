@@ -16,6 +16,8 @@ SENSOR = gpio.Button(21)
 color = (0, 0, 255)
 while True:
     
+    
+    
     _, image = cam.read()
     
     if SENSOR.is_pressed():
