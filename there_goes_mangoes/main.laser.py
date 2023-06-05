@@ -1,7 +1,7 @@
 from time import sleep
 
 import cv2
-import gpiozero as gpio
+import VL53L0X
 
 from there_goes_mangoes.util.draw_crosshair import crosshair_norm
 
@@ -11,14 +11,13 @@ while not cam.isOpened():
     cam = cv2.VideoCapture(0)
     sleep(0.01)
 
-factory = gpio.pins.pigpio.PiGPIOFactory()
+tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
+tof.open()
+tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
-while True:
-    try:
-        SENSOR = gpio.DistanceSensor(echo=21, trigger=20, pin_factory=factory, partial=True)
-        break
-    except:
-        sleep(0.01)
+timing = tof.get_timing()
+if timing < 20000:
+    timing = 20000
 
 cv2.namedWindow("Camera View: Ultrasonic", cv2.WND_PROP_FULLSCREEN)
 cv2.setWindowProperty("Camera View: Ultrasonic", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
@@ -26,11 +25,8 @@ cv2.setWindowProperty("Camera View: Ultrasonic", cv2.WND_PROP_FULLSCREEN, cv2.WI
 while True:
     ret, image = cam.read()
     
-    try:
-        dist = SENSOR.distance * 100
-    except:
-        sleep(0.25)
-        continue
+    dist = tof.get_distance() / 10
+    dist -= 4
     
     image = crosshair_norm(image, 0.1, 0.1, 0.05)
     image = cv2.putText(image, f"{dist:.2f}cm", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
@@ -41,7 +37,7 @@ while True:
     if k != -1:
         break
     else:
-        sleep(0.05)
+        sleep(timing / 1000000)
     
 cam.release()
 cv2.destroyAllWindows()

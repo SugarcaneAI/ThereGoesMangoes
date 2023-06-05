@@ -1,6 +1,9 @@
+from time import sleep
+
+import cv2
 import gpiozero as gpio
-from time import sleep, time_ns
-import itertools
+
+from there_goes_mangoes.util.draw_crosshair import crosshair_norm
 
 factory = gpio.pins.pigpio.PiGPIOFactory()
 
@@ -11,14 +14,12 @@ while True:
     except:
         sleep(0.5)
     
-begin = time_ns()
-cur = time_ns()
-for count in itertools.count():
+
+while True:
     try:
         dist = SENSOR.distance * 100
     except:
         sleep(0.25)
         continue
-    print(f"{count}: {dist:.2f}cm  @ {(time_ns() - cur) / 100000000:.2f}s ({(time_ns() - begin) / 1000000000:.2f}s)")
-    cur = time_ns()
+    
     sleep(0.25)
