@@ -1262,6 +1262,21 @@ socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
+name = "VL53L0X"
+version = "1.0.4"
+description = "VL53L0X sensor for raspberry PI/JetsonTX2"
+optional = false
+python-versions = "*"
+files = []
+develop = false
+
+[package.source]
+type = "git"
+url = "https://github.com/pimoroni/VL53L0X-python.git"
+reference = "HEAD"
+resolved_reference = "1b6f02dac1a352e01e549b3e98747f4933f48ec3"
+
+[[package]]
 name = "zipp"
 version = "3.15.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -1279,4 +1294,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "dc4f7e74971afea581bfa324dad65fb7cce07180c4b324308833cd622b0c6ead"
+content-hash = "bb9984b671387a857c23941aa9fa9fcb93aabe05c2b0c24a6768bce61b84cdbc"
