@@ -11,21 +11,25 @@ while not cam.isOpened():
     cam = cv2.VideoCapture(0)
     sleep(0.01)
     
-SENSOR = gpio.Button(21)
+factory = gpio.pins.pigpio.PiGPIOFactory()
+    
+SENSOR = gpio.Button(21, pin_factory=factory)
+
+cv2.namedWindow("Camera View: Proximity-IR", cv2.WND_PROP_FULLSCREEN)
+cv2.setWindowProperty("Camera View: Proximity-IR", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
 
 while True:
     
     color = (0, 0, 255)
     
-    _, image = cam.read()
+    ret, image = cam.read()
     
-    if SENSOR.is_pressed():
+    if SENSOR.is_pressed:
         color = (0, 255, 0)
-    
-    cv2.namedWindow("Camera View: Ultrasonic", cv2.WND_PROP_FULLSCREEN)
-    cv2.setWindowProperty("Camera View: Ultrasonic", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
 
     image = crosshair_norm(image, 0.1, 0.1, 0.05, color=color)
+    
+    cv2.imshow("Camera View: Proximity-IR", image)
     
     k = cv2.waitKey(1)
     if k != -1:
