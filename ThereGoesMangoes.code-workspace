@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../VL53L0X_rasp_python"
 		}
 	],
 	"settings": {}
