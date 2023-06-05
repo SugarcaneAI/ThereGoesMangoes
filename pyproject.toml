@@ -14,6 +14,7 @@ opencv-python = "^4.7.0.72"
 scikit-learn = "^1.2.2"
 gpiozero = "^1.6.2"
 vl53l0x = {git = "https://github.com/pimoroni/VL53L0X-python.git"}
+smbus2 = "^0.4.2"
 
 [tool.poetry.group.dev.dependencies]
 matplotlib = "^3.7.1"

@@ -1,5 +1,6 @@
 import time
 import VL53L0X
+import itertools
 
 # Create a VL53L0X object
 tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
@@ -14,8 +15,9 @@ if timing < 20000:
     timing = 20000
 print("Timing %d ms" % (timing/1000))
 
-for count in range(1, 101):
+for count in itertools.count():
     distance = tof.get_distance()
+    distance -= 4
     if distance > 0:
         print("%d mm, %d cm, %d" % (distance, (distance/10), count))
 
