@@ -7,5 +7,58 @@
 			"path": "../ThereGoesMangoesDataset"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"editor.tokenColorCustomizations": {
+			"textMateRules": [
+				{
+					"scope": "vexlog.error",
+					"settings": {
+						"foreground": "#ff3232"
+					}
+				},
+				{
+					"scope": "vexlog.warning",
+					"settings": {
+						"foreground": "#FFFF00"
+					}
+				},
+				{
+					"scope": "vexlog.normal",
+					"settings": {
+						"foreground": "#4479ff"
+					}
+				},
+				{
+					"scope": "vexlog.battery",
+					"settings": {
+						"foreground": "#4479ff"
+					}
+				},
+				{
+					"scope": "vexlog.power",
+					"settings": {
+						"foreground": "#00a000"
+					}
+				},
+				{
+					"scope": "googletest.failed",
+					"settings": {
+						"foreground": "#f00"
+					}
+				},
+				{
+					"scope": "googletest.passed",
+					"settings": {
+						"foreground": "#0f0"
+					}
+				},
+				{
+					"scope": "googletest.run",
+					"settings": {
+						"foreground": "#0f0"
+					}
+				}
+			]
+		}
+	}
 }
