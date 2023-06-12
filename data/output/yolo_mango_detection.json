@@ -1,0 +1,1 @@
+{"name": "mango_detection", "path": "D:/Git/ThereGoesMangoes/data/output", "train": "images/train", "val": "images/val", "test": "images/test", "names": {"0": "carabao", "1": "flower", "2": "indian"}}
