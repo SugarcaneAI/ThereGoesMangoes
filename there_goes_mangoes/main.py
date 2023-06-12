@@ -1,7 +1,10 @@
 from time import sleep
 
 import cv2
+
 import gpiozero as gpio
+
+from ultralytics import YOLO
 
 from there_goes_mangoes.util.draw_crosshair import crosshair_norm
 

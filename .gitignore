@@ -157,3 +157,7 @@ cython_debug/
 
 # Trash / Unnecessary files
 *.zip
+
+# Package Objects
+
+*.pt
