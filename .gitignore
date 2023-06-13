@@ -166,3 +166,4 @@ cython_debug/
 
 # Files
 files/wirings/wirings-backup/*
+files/wirings/_autosave-*.kicad_sch
