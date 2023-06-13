@@ -1,0 +1,6 @@
+(sym_lib_table
+  (lib (name "Multilevel Voltage Converter")(type "KiCad")(uri "${KIPRJMOD}/lib/Multilevel Voltage Converter.kicad_sym")(options "")(descr ""))
+  (lib (name "Raspberry Pi 4")(type "KiCad")(uri "${KIPRJMOD}/lib/Raspberry Pi 4.kicad_sym")(options "")(descr ""))
+  (lib (name "Battery Power and Management")(type "KiCad")(uri "${KIPRJMOD}/lib/Battery Power and Management.kicad_sym")(options "")(descr ""))
+  (lib (name "Sensors and Others")(type "KiCad")(uri "${KIPRJMOD}/lib/Sensors and Others.kicad_sym")(options "")(descr ""))
+)
