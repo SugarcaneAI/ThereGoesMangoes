@@ -39,5 +39,6 @@ while True:
     else:
         sleep(timing / 1000000)
     
+tof.stop_ranging()
 cam.release()
 cv2.destroyAllWindows()
