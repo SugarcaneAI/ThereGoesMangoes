@@ -16,19 +16,20 @@ while not cam.isOpened():
     cam = cv2.VideoCapture(0)
     sleep(0.01)
     
-#cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
-#cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
+cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
+cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
 
-while True:
-    result = None
+results = model.predict(0, True)
+
+for result in results:
     
-    _, image = cam.read()
+    image = result.orig_img
     
-    results = model.predict(image, True)
-    
-    if results.gi_running:
-        for result in results:
-            pass
+    result
         
     cv2.imshow(WND_NAME, image)
-    sleep(0.5)
+    k = cv2.waitKey(1)
+    if k != -1:
+        break
+    else:
+        sleep(0.5)
