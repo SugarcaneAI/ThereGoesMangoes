@@ -32,7 +32,7 @@ timing = tof.get_timing()
 if timing < 20000:
     timing = 20000
 
-results = model.predict(0, stream=True)
+results = model.predict(1, stream=True)
 
 for result in results:
     image = result.orig_img
