@@ -13,7 +13,7 @@ model = YOLO(MODEL_PATH, task="detect")
 cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
 cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
 
-results = model.predict(0, True)
+results = model.predict(-1, True)
 
 for result in results:
     
