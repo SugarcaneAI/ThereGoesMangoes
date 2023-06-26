@@ -7,15 +7,15 @@ import VL53L0X
 
 from ultralytics import YOLO
 
+import gpiozero as gpio
+
 from there_goes_mangoes.util.draw_crosshair import crosshair_norm
 
+WND_NAME = "Camera View"
 PARAM_MODEL = pl.Path(r"E:\Git\ThereGoesMangoes\model\nano-640\weights\best.pt")
 
-cam = cv2.VideoCapture(0)
-
-while not cam.isOpened():
-    cam = cv2.VideoCapture(0)
-    sleep(0.01)
+XSHUT = gpio.OutputDevice(4)
+XSHUT.on()
 
 tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 tof.open()
@@ -25,10 +25,10 @@ timing = tof.get_timing()
 if timing < 20000:
     timing = 20000
 
-cv2.namedWindow("Camera View: Ultrasonic", cv2.WND_PROP_FULLSCREEN)
-cv2.setWindowProperty("Camera View: Ultrasonic", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
+cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
+cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
 
-results = YOLO()
+model = YOLO(PARAM_MODEL)
 
 while True:
     ret, image = cam.read()
