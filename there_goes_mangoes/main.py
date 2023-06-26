@@ -15,14 +15,16 @@ WND_NAME = "Camera View"
 PARAM_MODEL = pl.Path(__file__).parents[1].joinpath("model/torch.pt")
 
 XSHUT = gpio.OutputDevice(4)
+MOTOR = gpio.OutputDevice(20)
+VALVE = gpio.OutputDevice(21)
 XSHUT.on()
+MOTOR.on()
+VALVE.on()
 
 cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
 cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
 
 model = YOLO(PARAM_MODEL)
-
-XSHUT.off()
 
 tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 tof.open()
@@ -33,6 +35,8 @@ if timing < 20000:
     timing = 20000
 
 results = model.predict(0, stream=True)
+
+XSHUT.off()
 
 for result in results:
     image = result.orig_img
