@@ -12,10 +12,17 @@ import gpiozero as gpio
 from there_goes_mangoes.util.draw_crosshair import crosshair_norm
 
 WND_NAME = "Camera View"
-PARAM_MODEL = pl.Path(r"E:\Git\ThereGoesMangoes\model\nano-640\weights\best.pt")
+PARAM_MODEL = pl.Path(__file__).parents[1].joinpath("model/torch.pt")
 
 XSHUT = gpio.OutputDevice(4)
 XSHUT.on()
+
+cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
+cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
+
+model = YOLO(PARAM_MODEL)
+
+XSHUT.off()
 
 tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 tof.open()
@@ -25,13 +32,10 @@ timing = tof.get_timing()
 if timing < 20000:
     timing = 20000
 
-cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
-cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
+results = model.predict(0, stream=True)
 
-model = YOLO(PARAM_MODEL)
-
-while True:
-    ret, image = cam.read()
+for result in results:
+    image = result.orig_img
     
     dist = tof.get_distance() / 10
     dist -= 4
@@ -39,7 +43,7 @@ while True:
     image = crosshair_norm(image, 0.1, 0.1, 0.05)
     image = cv2.putText(image, f"{dist:.2f}cm", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
     
-    cv2.imshow("Camera View: Ultrasonic", image)
+    cv2.imshow(WND_NAME, image)
     
     k = cv2.waitKey(1)
     if k != -1:
@@ -47,5 +51,4 @@ while True:
     else:
         sleep(timing / 1000000)
     
-cam.release()
 cv2.destroyAllWindows()
