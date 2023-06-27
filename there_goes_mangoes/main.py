@@ -15,7 +15,7 @@ WND_NAME = "Camera View"
 PARAM_MODEL = pl.Path(__file__).parents[1].joinpath("model/torch.pt")
 
 XSHUT = gpio.OutputDevice(4)
-MOTOR = gpio.OutputDevice(20)
+MOTOR = gpio.OutputDevice(16)
 VALVE = gpio.OutputDevice(21)
 XSHUT.on()
 MOTOR.off()
@@ -34,7 +34,8 @@ timing = tof.get_timing()
 if timing < 20000:
     timing = 20000
 
-results = model.predict(0, stream=True)
+results = model.predict(r"/home/theregoesmangoes/system/ThereGoesMangoes/data/sets/xen/mango_7_carabao_C1.png", stream=True, conf=0.6)
+#results = model.predict(0, stream=True, conf=0.6)
 
 XSHUT.off()
 
@@ -42,10 +43,14 @@ for result in results:
     image = result.orig_img
     
     dist = tof.get_distance() / 10
-    dist -= 4
+    #dist -= 4
     
     image = crosshair_norm(image, 0.1, 0.1, 0.05)
     image = cv2.putText(image, f"{dist:.2f}cm", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+    
+    if len(result.boxes) > 0:
+        for box in result.boxes:
+            cx, cy, ww, hh = box.cpu().xywhn[0].numpy()
     
     cv2.imshow(WND_NAME, image)
     
