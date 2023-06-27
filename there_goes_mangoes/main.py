@@ -22,7 +22,7 @@ XSHUT.on()
 MOTOR.off()
 VALVE.off()
 
-cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
+cv2.namedWindow(WND_NAME, cv2.WINDOW_AUTOSIZE)
 cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
 
 model = YOLO(PARAM_MODEL)
