@@ -63,8 +63,10 @@ for result in results:
             ex = int((cx + (ww / 2)) * nw)
             ey = int((cy + (hh / 2)) * nh)
             
+            image = cv2.rectangle(image, (bx, by), (ex, ey), (0, 0, 127), thickness=2)
+            
             ax, ay = np.power((np.array((0.5, 0.5)) - np.array((cx, cy))), 2)
-            rdist = np.sqrt([ax + ay])[0]
+            rdist = np.abs(np.sqrt([ax + ay]))[0]
             
             if rdist < brdist:
                 brdist = rdist
