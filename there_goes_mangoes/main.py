@@ -1,5 +1,5 @@
 import pathlib as pl
-from time import sleep
+from time import sleep, time_ns
 
 import cv2
 import numpy as np
@@ -44,6 +44,21 @@ while True:
     if not cam.isOpened():
         cam = cv2.VideoCapture(0)
         sleep(0.01)
+        
+    else:
+        _, image = cam.read()
+        cap = time_ns()
+        
+        results = model.predict(image, stream=True, conf=0.6)
+        
+        delay = time_ns() - cap
+        for result in results:
+            dist = (tof.get_distance() / 10) - 2
+            
+            image = cv2.putText(image, f"{dist:.2f}cm", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+            image = cv2.putText(image, f"{delay:.2f}s", (5, image.shape[0] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness=2)
+            
+        cv2.imshow(WND_NAME, image)
     
     k = cv2.waitKey(1)
     if k != -1:
