@@ -16,7 +16,7 @@ WND_NAME = "Camera View"
 PARAM_MODEL = pl.Path(__file__).parents[1].joinpath("model/torch.pt")
 
 XSHUT = gpio.OutputDevice(4)
-MOTOR = gpio.OutputDevice(16)
+MOTOR = gpio.OutputDevice(20)
 VALVE = gpio.OutputDevice(21)
 XSHUT.on()
 MOTOR.off()
@@ -79,7 +79,7 @@ for result in results:
             
         image = cv2.putText(image, f"{dist:.2f}cm", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
                 
-        if rdist >= 0.15:
+        if rdist <= 0.15:
             color = (0, 255, 0)
             
         image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
