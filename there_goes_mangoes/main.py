@@ -20,7 +20,7 @@ MOTOR = gpio.OutputDevice(20)
 VALVE = gpio.OutputDevice(21)
 XSHUT.on()
 MOTOR.off()
-VALVE.off()
+VAALVE.off()
 
 cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
 cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
