@@ -39,11 +39,15 @@ if timing < 20000:
     timing = 20000
     
 cam = cv2.VideoCapture(0)
-
-while not cam.isOpened():
-    cam = cv2.VideoCapture(0)
-    sleep(0.01)
     
 while True:
-    pass
+    if not cam.isOpened():
+        cam = cv2.VideoCapture(0)
+        sleep(0.01)
+    
+    k = cv2.waitKey(1)
+    if k != -1:
+        break
+    else:
+        sleep(timing / 1000000)
 
