@@ -63,10 +63,12 @@ while True:
             
         nh, nw, _ = image.shape
         
-        TAGRET = False
+        TARGET = False
         
         for result in results:
     
+            color = (255, 0, 0)
+            
             if len(result.boxes) > 0:
                 brdist = 1
                 
@@ -85,6 +87,10 @@ while True:
                     ex = int((cx + (ww / 2)) * nw)
                     ey = int((cy + (hh / 2)) * nh)
                     
+                    area = (ex - bx) * (ey - by)
+                    if area >= (nh * nw * 0.90):
+                        continue
+                    
                     image = cv2.rectangle(image, (bx, by), (ex, ey), (0, 0, 127), thickness=2)
                     
                     ax, ay = np.power((np.array((0.5, 0.5)) - np.array((cx, cy))), 2)
@@ -97,11 +103,11 @@ while True:
                         fex = ex
                         fey = ey
                         
-                if rdist <= 0.15:
+                if brdist <= 0.15:
                     color = (0, 255, 0)
                     
                     if 30 <= dist <= 35:
-                        TARGET = True
+                        TARGET = True                
                     
                 image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
                 
