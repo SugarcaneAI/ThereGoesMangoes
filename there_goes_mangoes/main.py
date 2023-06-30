@@ -18,6 +18,9 @@ XSHUT = gpio.OutputDevice(4)
 MOTOR = gpio.OutputDevice(20, active_high=False)
 VALVE = gpio.OutputDevice(21, active_high=False)
 XSHUT.off()
+
+MOTOR.on()
+sleep(2.5)
 MOTOR.off()
 VALVE.off()
 
@@ -49,17 +52,108 @@ while True:
         _, image = cam.read()
         cap = time_ns()
         
-        results = model.predict(image, stream=True, conf=0.6)
+        results = model.predict(image, stream=False, conf=0.6)
         
         delay = time_ns() - cap
-        for result in results:
-            dist = (tof.get_distance() / 10) - 2
+        
+        dist = (tof.get_distance() / 10) - 2
             
-            image = cv2.putText(image, f"{dist:.2f}cm", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
-            image = cv2.putText(image, f"{delay:.2f}s", (5, image.shape[0] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness=2)
+        image = cv2.putText(image, f"{dist:.2f}cm", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+        image = cv2.putText(image, f"{(delay / 1000000000):.2f}s", (5, image.shape[0] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness=2)
+            
+        nh, nw, _ = image.shape
+        
+        TAGRET = False
+        
+        for result in results:
+    
+            if len(result.boxes) > 0:
+                brdist = 1
+                
+                fbx = 0
+                fby = 0
+                fex = 0
+                fey = 0
+                for box in result.boxes:
+                    if int(box.cls) == 1:
+                        continue
+                    
+                    cx, cy, ww, hh = box.cpu().xywhn[0].numpy()
+                    
+                    bx = int((cx - (ww / 2)) * nw)
+                    by = int((cy - (hh / 2)) * nh)
+                    ex = int((cx + (ww / 2)) * nw)
+                    ey = int((cy + (hh / 2)) * nh)
+                    
+                    image = cv2.rectangle(image, (bx, by), (ex, ey), (0, 0, 127), thickness=2)
+                    
+                    ax, ay = np.power((np.array((0.5, 0.5)) - np.array((cx, cy))), 2)
+                    rdist = np.abs(np.sqrt([ax + ay]))[0]
+                    
+                    if rdist < brdist:
+                        brdist = rdist
+                        fbx = bx
+                        fby = by
+                        fex = ex
+                        fey = ey
+                        
+                if rdist <= 0.15:
+                    color = (0, 255, 0)
+                    
+                    if 30 <= dist <= 35:
+                        TARGET = True
+                    
+                image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
+                
+        if TARGET:
+            image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
+        else:
+            image = crosshair_norm(image, 0.1, 0.1, 0.05)
             
         cv2.imshow(WND_NAME, image)
-    
+        
+        if TARGET:
+            
+            _, image = cap.read()
+            image = cv2.putText(image, f"PROCESING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+            image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
+            image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
+            MOTOR.on()
+            
+            cv2.imshow(WND_NAME, image)
+            sleep(0.05)
+            
+            _, image = cap.read()
+            image = cv2.putText(image, f"SPRAYING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+            image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
+            image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
+            VALVE.on()
+            
+            cv2.imshow(WND_NAME, image)
+            sleep(0.05)
+            MOTOR.off()
+            sleep(0.05)
+            
+            _, image = cap.read()
+            image = cv2.putText(image, f"SPRAYING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+            image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
+            image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
+            VALVE.off()
+            
+            cv2.imshow(WND_NAME, image)
+            
+            MOTOR.on()
+            for ii in range(25):
+                _, image = cap.read()
+                
+                image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
+                image = cv2.putText(image, f"DOWNTIME: {(50 - ii) / 10}s", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+                
+                cv2.imshow(WND_NAME, image)
+                
+                sleep(0.01)
+            MOTOR.off()
+        
     k = cv2.waitKey(1)
     if k != -1:
         break
