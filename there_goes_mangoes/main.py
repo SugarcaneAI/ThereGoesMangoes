@@ -15,14 +15,14 @@ WND_NAME = "Camera View"
 PARAM_MODEL = pl.Path(__file__).parents[1].joinpath("model/torch.pt")
 
 XSHUT = gpio.OutputDevice(4)
-MOTOR = gpio.OutputDevice(21, active_high=False)
-VALVE = gpio.OutputDevice(20, active_high=False)
+MOTOR = gpio.OutputDevice(20, active_high=False)
+VALVE = gpio.OutputDevice(21, active_high=False)
 XSHUT.off()
 
 MOTOR.on()
 sleep(2.5)
 #MOTOR.off()
-VALVE.off()
+#VALVE.off()
 
 cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
 cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
@@ -138,7 +138,7 @@ while True:
             cv2.imshow(WND_NAME, image)
             sleep(0.5)
             
-            VALVE.on()
+            #VALVE.on()
             for ii in range(int(tspray * 10)):
                 _, image = cam.read()
                 image = cv2.putText(image, f"SPRAYING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
