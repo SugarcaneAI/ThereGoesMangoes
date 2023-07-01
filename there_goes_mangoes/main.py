@@ -120,7 +120,7 @@ while True:
         
         if TARGET:
             
-            _, image = cap.read()
+            _, image = cam.read()
             image = cv2.putText(image, f"PROCESING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
             image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
             image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
@@ -129,7 +129,7 @@ while True:
             cv2.imshow(WND_NAME, image)
             sleep(0.05)
             
-            _, image = cap.read()
+            _, image = cam.read()
             image = cv2.putText(image, f"SPRAYING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
             image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
             image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
@@ -140,7 +140,7 @@ while True:
             MOTOR.off()
             sleep(0.05)
             
-            _, image = cap.read()
+            _, image = cam.read()
             image = cv2.putText(image, f"SPRAYING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
             image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
             image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
@@ -150,7 +150,7 @@ while True:
             
             MOTOR.on()
             for ii in range(25):
-                _, image = cap.read()
+                _, image = cam.read()
                 
                 image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
                 image = cv2.putText(image, f"DOWNTIME: {(50 - ii) / 10}s", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
