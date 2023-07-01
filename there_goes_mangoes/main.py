@@ -15,8 +15,8 @@ WND_NAME = "Camera View"
 PARAM_MODEL = pl.Path(__file__).parents[1].joinpath("model/torch.pt")
 
 XSHUT = gpio.OutputDevice(4)
-MOTOR = gpio.OutputDevice(20, active_high=False)
-VALVE = gpio.OutputDevice(21, active_high=False)
+MOTOR = gpio.OutputDevice(21, active_high=False)
+VALVE = gpio.OutputDevice(20, active_high=False)
 XSHUT.off()
 
 MOTOR.on()
