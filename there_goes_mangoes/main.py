@@ -43,12 +43,16 @@ if timing < 20000:
     
 cam = cv2.VideoCapture(0)
     
+LOCK = False
 while True:
-    if not cam.isOpened():
-        cam = cv2.VideoCapture(0)
-        sleep(0.01)
+    
+    if not LOCK: 
+        if not cam.isOpened():
+            cam = cv2.VideoCapture(0)
+            sleep(0.01)
         
     else:
+        LOCK = True
         _, image = cam.read()
         cap = time_ns()
         
@@ -157,7 +161,11 @@ while True:
                 
                 cv2.imshow(WND_NAME, image)
                 
-                sleep(0.1)
+                k = cv2.waitKey(1)
+                if k != -1:
+                    break
+                else:
+                    sleep(0.1)
             MOTOR.off()
         
     k = cv2.waitKey(1)
