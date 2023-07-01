@@ -127,6 +127,8 @@ while True:
             tof.stop_ranging()
             XSHUT.off()
             
+            tspray = (dist - 30) * 1.5
+            
             _, image = cam.read()
             image = cv2.putText(image, f"PROCESING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
             image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
@@ -134,26 +136,18 @@ while True:
             MOTOR.on()
             
             cv2.imshow(WND_NAME, image)
-            sleep(0.05)
+            sleep(0.5)
             
-            _, image = cam.read()
-            image = cv2.putText(image, f"SPRAYING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
-            image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
-            image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
             VALVE.on()
-            
-            cv2.imshow(WND_NAME, image)
-            sleep(0.05)
-            MOTOR.off()
-            sleep(0.05)
-            
-            _, image = cam.read()
-            image = cv2.putText(image, f"SPRAYING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
-            image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
-            image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
-            VALVE.off()
-            
-            cv2.imshow(WND_NAME, image)
+            for ii in range(int(tspray * 10)):
+                _, image = cam.read()
+                image = cv2.putText(image, f"SPRAYING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+                image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
+                image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
+                
+                cv2.imshow(WND_NAME, image)
+                sleep(0.01)
+            VALVE.off
 
             MOTOR.on()
             for ii in range(25):
