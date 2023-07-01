@@ -50,9 +50,10 @@ while True:
         if not cam.isOpened():
             cam = cv2.VideoCapture(0)
             sleep(0.01)
+        else:
+            LOCK = True
         
     else:
-        LOCK = True
         _, image = cam.read()
         cap = time_ns()
         
