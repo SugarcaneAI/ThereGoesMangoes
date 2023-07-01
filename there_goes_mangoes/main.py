@@ -148,7 +148,7 @@ while True:
             #    cv2.imshow(WND_NAME, image)
             #    sleep(0.01)
             sleep(1)
-            VALVE.off
+            VALVE.off()
 
             MOTOR.on()
             for ii in range(25):
