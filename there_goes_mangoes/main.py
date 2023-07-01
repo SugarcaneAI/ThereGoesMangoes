@@ -21,7 +21,7 @@ XSHUT.off()
 
 MOTOR.on()
 sleep(2.5)
-MOTOR.off()
+#MOTOR.off()
 VALVE.off()
 
 cv2.namedWindow(WND_NAME, cv2.WND_PROP_FULLSCREEN)
@@ -133,7 +133,7 @@ while True:
             image = cv2.putText(image, f"PROCESING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
             image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
             image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
-            MOTOR.on()
+            #MOTOR.on()
             
             cv2.imshow(WND_NAME, image)
             sleep(0.5)
@@ -149,7 +149,7 @@ while True:
                 sleep(0.01)
             VALVE.off
 
-            MOTOR.on()
+            #MOTOR.on()
             for ii in range(25):
                 _, image = cam.read()
                 
@@ -163,7 +163,7 @@ while True:
                     break
                 else:
                     sleep(0.1)
-            MOTOR.off()
+            #MOTOR.off()
             
             tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 
