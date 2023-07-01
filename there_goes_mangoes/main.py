@@ -53,7 +53,7 @@ while True:
         else:
             LOCK = True
         
-    else:
+    while True:
         _, image = cam.read()
         cap = time_ns()
         
@@ -124,6 +124,8 @@ while True:
         cv2.imshow(WND_NAME, image)
         
         if TARGET:
+            tof.stop_ranging()
+            XSHUT.off()
             
             _, image = cam.read()
             image = cv2.putText(image, f"PROCESING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
@@ -152,13 +154,13 @@ while True:
             VALVE.off()
             
             cv2.imshow(WND_NAME, image)
-            
+
             MOTOR.on()
             for ii in range(25):
                 _, image = cam.read()
                 
                 image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
-                image = cv2.putText(image, f"DOWNTIME: {(50 - ii) / 10}s", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+                image = cv2.putText(image, f"DOWNTIME: {(25 - ii) / 10}s", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
                 
                 cv2.imshow(WND_NAME, image)
                 
@@ -168,6 +170,20 @@ while True:
                 else:
                     sleep(0.1)
             MOTOR.off()
+            
+            tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
+
+            XSHUT.on()
+
+            tof.open()
+
+            tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
+            
+        k = cv2.waitKey(1)
+        if k != -1:
+            break
+        else:
+            sleep(timing / 1000000)
         
     k = cv2.waitKey(1)
     if k != -1:
