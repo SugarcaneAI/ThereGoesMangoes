@@ -157,7 +157,7 @@ while True:
                 
                 cv2.imshow(WND_NAME, image)
                 
-                sleep(0.01)
+                sleep(0.1)
             MOTOR.off()
         
     k = cv2.waitKey(1)
