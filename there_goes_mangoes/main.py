@@ -134,7 +134,7 @@ while True:
             MOTOR.on()
             
             cv2.imshow(WND_NAME, image)
-            sleep(0.5)
+            sleep(0.02)
             
             VALVE.on()
             #for ii in range(int(tspray * 10)):
@@ -146,7 +146,6 @@ while True:
             #    cv2.imshow(WND_NAME, image)
             #    sleep(0.01)
             sleep(1 * tspray)
-            VALVE.off()
 
             MOTOR.off()
             for ii in range(25):
@@ -162,6 +161,7 @@ while True:
                     break
                 else:
                     sleep(0.03) # sleep for 1 frame time
+            VALVE.off()
             
             tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 
