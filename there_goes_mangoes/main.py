@@ -136,7 +136,7 @@ while True:
             MOTOR.on()
             
             cv2.imshow(WND_NAME, image)
-            sleep(0.02)
+            sleep(1.25)
         
             #for ii in range(int(tspray * 10)):
             #    _, image = cam.read()
