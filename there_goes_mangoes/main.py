@@ -126,6 +126,8 @@ while True:
             XSHUT.off()
             
             tspray = ((dist - 30) / 5)
+            VALVE.on()
+            sleep(1)
             
             _, image = cam.read()
             image = cv2.putText(image, f"PROCESING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
@@ -135,8 +137,7 @@ while True:
             
             cv2.imshow(WND_NAME, image)
             sleep(0.02)
-            
-            VALVE.on()
+        
             #for ii in range(int(tspray * 10)):
             #    _, image = cam.read()
             #    image = cv2.putText(image, f"SPRAYING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
@@ -148,6 +149,7 @@ while True:
             sleep(1 * tspray)
 
             MOTOR.off()
+            VALVE.off()
             for ii in range(25):
                 _, image = cam.read()
                 
@@ -161,7 +163,6 @@ while True:
                     break
                 else:
                     sleep(0.03) # sleep for 1 frame time
-            VALVE.off()
             
             tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 
