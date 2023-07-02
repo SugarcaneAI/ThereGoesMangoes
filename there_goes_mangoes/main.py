@@ -19,8 +19,6 @@ MOTOR = gpio.OutputDevice(20, active_high=False)
 VALVE = gpio.OutputDevice(21, active_high=False)
 XSHUT.off()
 
-MOTOR.on()
-sleep(2.5)
 MOTOR.off()
 VALVE.off()
 
@@ -127,7 +125,7 @@ while True:
             tof.stop_ranging()
             XSHUT.off()
             
-            tspray = (dist - 30) * 1.5
+            tspray = ((dist - 30) / 5)
             
             _, image = cam.read()
             image = cv2.putText(image, f"PROCESING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
@@ -147,10 +145,10 @@ while True:
             #    
             #    cv2.imshow(WND_NAME, image)
             #    sleep(0.01)
-            sleep(1)
+            sleep(1 * tspray)
             VALVE.off()
 
-            MOTOR.on()
+            MOTOR.off()
             for ii in range(25):
                 _, image = cam.read()
                 
@@ -164,7 +162,6 @@ while True:
                     break
                 else:
                     sleep(0.1)
-            MOTOR.off()
             
             tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 
