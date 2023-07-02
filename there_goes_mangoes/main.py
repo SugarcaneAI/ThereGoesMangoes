@@ -161,7 +161,7 @@ while True:
                 if k != -1:
                     break
                 else:
-                    sleep(0.1)
+                    sleep(0.03) # sleep for 1 frame time
             
             tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 
