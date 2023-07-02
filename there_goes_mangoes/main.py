@@ -62,7 +62,7 @@ while True:
         dist = (tof.get_distance() / 10) - 2
             
         image = cv2.putText(image, f"{dist:.2f}cm", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
-        image = cv2.putText(image, f"{(delay / 1000000000):.2f}s", (5, image.shape[0] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness=2)
+        image = cv2.putText(image, f"{(delay / 1000000000):.2f}s @ {(1 / (delay / 1000000000)):.2f} FPS", (5, image.shape[0] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness=2)
             
         nh, nw, _ = image.shape
         
