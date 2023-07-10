@@ -1,0 +1,14 @@
+description: Ultralytics best model trained on yolo_mango_detection.yaml
+author: Ultralytics
+license: AGPL-3.0 https://ultralytics.com/license
+version: 8.0.131
+stride: 32
+task: detect
+batch: 1
+imgsz:
+- 512
+- 512
+names:
+  0: carabao
+  1: flower
+  2: indian
