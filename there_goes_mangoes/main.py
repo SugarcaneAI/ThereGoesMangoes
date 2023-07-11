@@ -13,7 +13,7 @@ from there_goes_mangoes.util.draw_crosshair import crosshair_norm
 
 WND_NAME = "Camera View"
 PARAM_MODEL = pl.Path(__file__).parents[1].joinpath("model/torch.pt")
-PARAM_MODEL = pl.Path(r"model/_train/small-256/weights/best.pt")
+# PARAM_MODEL = pl.Path(r"model/_train/small-256/weights/best.pt")
 
 XSHUT = gpio.OutputDevice(4)
 MOTOR = gpio.OutputDevice(20, active_high=False)
@@ -56,20 +56,16 @@ while True:
         _, image = cam.read()
         cap = time_ns()
         
-        image = cv2.imread(r"/home/theregoesmangoes/system/ThereGoesMangoes/data/buffer/images/0d251aca-mango_558_carabao_C49.png")
-        image = cv2.resize(image, dsize=(640, 480), interpolation=cv2.INTER_AREA)
-        
         results = model.predict(
             cv2.resize(image, dsize=(256, 192), interpolation=cv2.INTER_AREA), 
             stream=False, 
             conf=0.6, 
-            imgsz=256
+            imgsz=(256, 192)
         )
         
         delay = time_ns() - cap
         
         dist = (tof.get_distance() / 10) - 2
-        dist = 33.47
             
         image = cv2.putText(image, f"{dist:.2f}cm", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
         image = cv2.putText(image, f"{(delay / 1000000000):.2f}s @ {(1 / (delay / 1000000000)):.2f} FPS", (5, image.shape[0] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness=2)
@@ -140,7 +136,8 @@ while True:
             sleep(1)
             
             _, image = cam.read()
-            image = cv2.putText(image, f"PROCESING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+            
+            image = cv2.putText(image, f"PROCESSING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
             image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
             image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
             MOTOR.on()
