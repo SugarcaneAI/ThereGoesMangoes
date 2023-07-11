@@ -8,7 +8,7 @@ VALVE = gpio.OutputDevice(21, active_high=False)
 button = gpio.Button(6, pull_up=False)
 button.hold_time = 1
 
-button.when_released = lambda: MOTOR.toggle(); VALVE.toggle()
+button.when_pressed = lambda: MOTOR.toggle(); VALVE.toggle()
 
 while True:
     sleep(0.01)
