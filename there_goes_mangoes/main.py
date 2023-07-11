@@ -13,6 +13,7 @@ from there_goes_mangoes.util.draw_crosshair import crosshair_norm
 
 WND_NAME = "Camera View"
 PARAM_MODEL = pl.Path(__file__).parents[1].joinpath("model/torch.pt")
+PARAM_MODEL = pl.Path(r"model/_train/small-256/weights/best.pt")
 
 XSHUT = gpio.OutputDevice(4)
 MOTOR = gpio.OutputDevice(20, active_high=False)
@@ -55,7 +56,7 @@ while True:
         _, image = cam.read()
         cap = time_ns()
         
-        results = model.predict(image, stream=False, conf=0.6)
+        results = model.predict(image, stream=False, conf=0.6, imgsz=(192, 256))
         
         delay = time_ns() - cap
         
