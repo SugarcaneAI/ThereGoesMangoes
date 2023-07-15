@@ -36,7 +36,7 @@ while True:
     if k != -1:
         break
     else:
-        sleep(0.5)
+        sleep(0.01)
         
 cv2.destroyAllWindows()
     
