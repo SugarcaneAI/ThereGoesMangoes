@@ -126,7 +126,6 @@ while True:
         
         if TARGET:
             
-            tspray = ((dist - 30) / 5)
             VALVE.on()
             
             _, image = cam.read()
@@ -149,7 +148,7 @@ while True:
             #    
             #    cv2.imshow(WND_NAME, image)
             #    sleep(0.01)
-            sleep(1 * tspray)
+            sleep(0.5)
 
             MOTOR.off()
             VALVE.off()
