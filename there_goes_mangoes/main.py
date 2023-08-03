@@ -132,7 +132,7 @@ while True:
         
         imintime = time_ns()
         mintime = (imintime - otime) / 1000000000
-        image = image = cv2.putText(image, f"min: {mintime:.6f}s | max: {maxtime:.6f} s", (5, 235), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
+        image = cv2.putText(image, f"min: {mintime:.6f}s | max: {maxtime:.6f}s", (5, 235), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
         
         cv2.imshow(WND_NAME, image)
         
@@ -147,6 +147,7 @@ while True:
             
             image = cv2.putText(image, f"PROCESSING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
             image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
+            image = cv2.putText(image, f"min: {mintime:.6f}s | max: {maxtime:.6f}s", (5, 235), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
             image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
             MOTOR.on()
             
@@ -175,7 +176,7 @@ while True:
                 
                 image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
                 image = cv2.putText(image, f"DOWNTIME: {(25 - ii) / 10}s", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
-                
+                image = cv2.putText(image, f"min: {mintime:.6f}s | max: {maxtime:.6f}s", (5, 235), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
                 cv2.imshow(WND_NAME, image)
                 
                 k = cv2.waitKey(1)
