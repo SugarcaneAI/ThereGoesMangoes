@@ -65,7 +65,7 @@ while True:
             cv2.resize(image, dsize=(256, 192), interpolation=cv2.INTER_AREA),
             stream=False,
             conf=0.6,
-            #imgsz=(256, 192)
+            imgsz=(256, 192)
         )
         
         delay = time_ns() - cap
