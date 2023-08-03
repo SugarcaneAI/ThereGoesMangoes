@@ -65,7 +65,7 @@ while True:
             cv2.resize(image, dsize=(256, 192), interpolation=cv2.INTER_AREA),
             stream=False,
             conf=0.6,
-            imgsz=(256, 192)
+            #imgsz=(256, 192)
         )
         
         delay = time_ns() - cap
@@ -132,7 +132,7 @@ while True:
         
         imintime = time_ns()
         mintime = (imintime - otime) / 1000000000
-        image = image = cv2.putText(image, f"min: {mintime:.6f}s | max: {maxtime:.6f} s", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+        image = image = cv2.putText(image, f"min: {mintime:.6f}s | max: {maxtime:.6f} s", (5, 235), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
         
         cv2.imshow(WND_NAME, image)
         
@@ -175,7 +175,7 @@ while True:
                 _, image = cam.read()
                 
                 image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
-                image = cv2.putText(image, f"DOWNTIME: {(25 - ii) / 10}s", (5, 235), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+                image = cv2.putText(image, f"DOWNTIME: {(25 - ii) / 10}s", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
                 
                 cv2.imshow(WND_NAME, image)
                 
