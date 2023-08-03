@@ -175,7 +175,7 @@ while True:
                 _, image = cam.read()
                 
                 image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
-                image = cv2.putText(image, f"DOWNTIME: {(25 - ii) / 10}s", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+                image = cv2.putText(image, f"DOWNTIME: {(25 - ii) / 10}s", (5, 235), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
                 
                 cv2.imshow(WND_NAME, image)
                 
