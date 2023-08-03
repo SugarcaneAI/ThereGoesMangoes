@@ -72,7 +72,7 @@ while True:
         
         dist = (tof.get_distance() / 10) - 2
             
-        image = cv2.putText(image, f"{dist:.2f}cm", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
+        image = cv2.putText(image, f"{dist:.2f}cm", (5, 270), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
         image = cv2.putText(image, f"{(delay / 1000000000):.2f}s @ {(1 / (delay / 1000000000)):.2f} FPS", (5, image.shape[0] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness=2)
             
         nh, nw, _ = image.shape
@@ -148,6 +148,7 @@ while True:
             image = cv2.putText(image, f"PROCESSING", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
             image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
             image = cv2.putText(image, f"min: {mintime:.6f}s | max: {maxtime:.6f}s", (5, 235), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
+            image = cv2.putText(image, f"{dist:.2f}cm", (5, 270), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
             image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
             MOTOR.on()
             
@@ -177,6 +178,7 @@ while True:
                 image = crosshair_norm(image, 0.1, 0.1, 0.05, color=(0, 255, 0))
                 image = cv2.putText(image, f"DOWNTIME: {(25 - ii) / 10}s", (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), thickness=2)
                 image = cv2.putText(image, f"min: {mintime:.6f}s | max: {maxtime:.6f}s", (5, 235), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
+                image = cv2.putText(image, f"{dist:.2f}cm", (5, 270), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
                 cv2.imshow(WND_NAME, image)
                 
                 k = cv2.waitKey(1)
@@ -192,14 +194,20 @@ while True:
             tof.open()
 
             tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
-            
+        
+            sleep(timing / 1000000)
+        
+            sleep(timing / 1000000)
+        
+            sleep(timing / 1000000)
+        
+        mintime = 0
+        maxtime = 0
         k = cv2.waitKey(1)
         if k != -1:
             break
         else:
             sleep(timing / 1000000)
-        mintime = 0
-        maxtime = 0
         
     k = cv2.waitKey(1)
     if k != -1:
