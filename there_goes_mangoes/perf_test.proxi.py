@@ -3,7 +3,6 @@ from time import sleep, time_ns
 
 import cv2
 import numpy as np
-import VL53L0X
 
 from ultralytics import YOLO
 
@@ -15,10 +14,8 @@ WND_NAME = "Camera View"
 PARAM_MODEL = pl.Path(__file__).parents[1].joinpath("model/torch.pt")
 # PARAM_MODEL = pl.Path(r"model/_train/small-256/weights/best.pt")
 
-XSHUT = gpio.OutputDevice(4)
 MOTOR = gpio.OutputDevice(20, active_high=False)
 VALVE = gpio.OutputDevice(21, active_high=False)
-XSHUT.off()
 
 MOTOR.off()
 VALVE.off()
@@ -28,17 +25,9 @@ cv2.setWindowProperty(WND_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_AUTOSIZE)
 
 model = YOLO(PARAM_MODEL)
 
-tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
+factory = gpio.pins.pigpio.PiGPIOFactory()
 
-XSHUT.on()
-
-tof.open()
-
-tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
-
-timing = tof.get_timing()
-if timing < 20000:
-    timing = 20000
+SENSOR = gpio.Button(7, pull_up=True, pin_factory=factory)
 
 cam = cv2.VideoCapture(0)
 
@@ -70,7 +59,7 @@ while True:
         
         delay = time_ns() - cap
         
-        dist = (tof.get_distance() / 10) - 2
+        dist = SENSOR.is_pressed
             
         image = cv2.putText(image, f"{dist:.2f}cm", (5, 270), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
         image = cv2.putText(image, f"{(delay / 1000000000):.2f}s @ {(1 / (delay / 1000000000)):.2f} FPS", (5, image.shape[0] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness=2)
@@ -120,8 +109,7 @@ while True:
                 if brdist <= 0.15:
                     color = (0, 255, 0)
                     
-                    if 30 <= dist <= 35:
-                        TARGET = True                
+                    TARGET = dist
                     
                 image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
                 
@@ -137,8 +125,6 @@ while True:
         cv2.imshow(WND_NAME, image)
         
         if TARGET:
-            tof.stop_ranging()
-            XSHUT.off()
             
             tspray = ((dist - 30) / 5)
             VALVE.on()
@@ -186,31 +172,21 @@ while True:
                     break
                 else:
                     sleep(0.03) # sleep for 1 frame time
-            
-            tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 
-            XSHUT.on()
-
-            tof.open()
-
-            tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
-        
-            sleep(timing / 1000000)
-        
-            sleep(timing / 1000000)
-        
-            sleep(timing / 1000000)
-        
         mintime = 0
         maxtime = 0
+        
+        dist = False
+        
         k = cv2.waitKey(1)
         if k != -1:
             break
         else:
-            sleep(timing / 1000000)
+            sleep(0.05)
         
     k = cv2.waitKey(1)
     if k != -1:
         break
     else:
-        sleep(timing / 1000000)
+        sleep(0.05)
+
