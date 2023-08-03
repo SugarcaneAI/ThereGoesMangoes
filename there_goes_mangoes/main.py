@@ -29,7 +29,7 @@ factory = gpio.pins.pigpio.PiGPIOFactory()
 
 while True:
     try:
-        SENSOR = gpio.DistanceSensor(echo=21, trigger=20, pin_factory=factory, partial=True)
+        SENSOR = gpio.DistanceSensor(echo=7, trigger=8, pin_factory=factory, partial=True)
         break
     except:
         sleep(0.05)
