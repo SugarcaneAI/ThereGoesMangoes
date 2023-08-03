@@ -198,6 +198,8 @@ while True:
             break
         else:
             sleep(timing / 1000000)
+        mintime = 0
+        maxtime = 0
         
     k = cv2.waitKey(1)
     if k != -1:
