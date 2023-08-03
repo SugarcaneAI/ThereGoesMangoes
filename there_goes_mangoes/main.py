@@ -27,12 +27,7 @@ model = YOLO(PARAM_MODEL)
 
 factory = gpio.pins.pigpio.PiGPIOFactory()
 
-while True:
-    try:
-        SENSOR = gpio.DistanceSensor(echo=7, trigger=8, pin_factory=factory, partial=True)
-        break
-    except:
-        sleep(0.05)
+SENSOR = gpio.Button(7, pull_up=True, pin_factory=factory)
 
 cam = cv2.VideoCapture(0)
 
@@ -64,7 +59,7 @@ while True:
         
         delay = time_ns() - cap
         
-        dist = SENSOR.distance * 100
+        dist = SENSOR.is_pressed
             
         image = cv2.putText(image, f"{dist:.2f}cm", (5, 270), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), thickness=2)
         image = cv2.putText(image, f"{(delay / 1000000000):.2f}s @ {(1 / (delay / 1000000000)):.2f} FPS", (5, image.shape[0] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness=2)
@@ -114,8 +109,7 @@ while True:
                 if brdist <= 0.15:
                     color = (0, 255, 0)
                     
-                    if 30 <= dist <= 35:
-                        TARGET = True
+                    TARGET = dist
                     
                 image = cv2.rectangle(image, (fbx, fby), (fex, fey), color=color, thickness=5)
                 
@@ -181,6 +175,9 @@ while True:
 
         mintime = 0
         maxtime = 0
+        
+        dist = False
+        
         k = cv2.waitKey(1)
         if k != -1:
             break
