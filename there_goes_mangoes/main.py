@@ -142,7 +142,6 @@ while True:
             
             tspray = ((dist - 30) / 5)
             VALVE.on()
-            sleep(1)
             
             _, image = cam.read()
             
