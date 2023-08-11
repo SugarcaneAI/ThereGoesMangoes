@@ -3,7 +3,7 @@ import os
 from time import sleep
 
 MOTOR = gpio.OutputDevice(20, active_high=False)
-VALVE = gpio.OutputDevice(21, active_high=False)
+VALVE = gpio.OutputDevice(16, active_high=False)
 
 button = gpio.Button(6, pull_up=False)
 button.hold_time = 1
