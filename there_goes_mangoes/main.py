@@ -43,8 +43,7 @@ if timing < 20000:
 cam = cv2.VideoCapture(0)
     
 LOCK = False
-while True:
-    
+      
     if not LOCK: 
         if not cam.isOpened():
             cam = cv2.VideoCapture(0)
