@@ -43,7 +43,8 @@ if timing < 20000:
 cam = cv2.VideoCapture(0)
     
 LOCK = False
-      
+
+while True:
     if not LOCK: 
         if not cam.isOpened():
             cam = cv2.VideoCapture(0)
@@ -85,7 +86,7 @@ LOCK = False
                 fex = 0
                 fey = 0
                 for box in result.boxes:
-                    if int(box.cls) == 1:
+                    if int(box.cls) in [1, 3, 4]:
                         continue
                     
                     cx, cy, ww, hh = box.cpu().xywhn[0].numpy()
