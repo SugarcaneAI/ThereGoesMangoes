@@ -9,14 +9,12 @@ packages = [{include = "there_goes_mangoes"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-ultralytics = "^8.0.90"
+ultralytics = "8.0.90"
 opencv-python = "^4.7.0.72"
 scikit-learn = "^1.2.2"
 gpiozero = "^1.6.2"
-vl53l0x = {git = "https://github.com/pimoroni/VL53L0X-python.git"}
 smbus2 = "^0.4.2"
 pigpio = "^1.78"
-rpi-gpio = "^0.7.1"
 
 [tool.poetry.group.dev.dependencies]
 matplotlib = "^3.7.1"
