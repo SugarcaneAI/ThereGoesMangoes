@@ -20,6 +20,8 @@ for index, imagepth in enumerate(FILES):
     height, width,_ = image.shape
 
     max_side = height if height >= width else width
+    if max_side == PARAM_MAX_SIDE_SIZE:
+        continue
     sratio = PARAM_MAX_SIDE_SIZE / max_side
 
     fx = height / max_side * sratio
