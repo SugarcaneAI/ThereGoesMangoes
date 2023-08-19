@@ -43,7 +43,7 @@ color_name = {
     4: "wet_indian",
 }
 
-PARAM_TEST_NAME = "test"
+PARAM_TEST_NAME = "val"
 
 PARAM_DATASET_ROOT = pl.Path(r"E:\Git\ThereGoesMangoesDataset")
 PARAM_DATASET_IMAGES = PARAM_DATASET_ROOT.joinpath("images").joinpath(PARAM_TEST_NAME)
@@ -135,7 +135,7 @@ for model_path in MODELS:
             conf=CONFIDENCE_MAP[model_name],
             verbose=None
         )[0].boxes
-        
+
         det = {
             "class": [],
             "class_name": [],
