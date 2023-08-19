@@ -132,20 +132,30 @@ for model_path in MODELS:
         boxes = model(
             image,
             stream=False,
+            conf=CONFIDENCE_MAP[model_name],
             verbose=None
         )[0].boxes
-
+        
+        det = {
+            "class": [],
+            "class_name": [],
+            "centroid_x": [],
+            "centroid_y": [],
+            "box_width": [],
+            "box_height": [],
+            "confidence": []
+        }
         for box in boxes:
 
             cls = int(box.cls)
-            conf = float(box.cls)
+            conf = float(box.conf)
 
             cx, cy, bw, bh = box.xywhn[0]
 
             cx = float(cx)
             cy = float(cy)
             bw = float(bw)
-            by = float(by)
+            bh = float(bh)
 
             rw = bw / 2
             rh = bh / 2
@@ -158,12 +168,24 @@ for model_path in MODELS:
             dplot = cv2.rectangle(dplot, (bx, by), (ex, ey), color=255, thickness=-1)
 
             image = cv2.rectangle(image, (bx, by), (ex, ey), color=color_dict[cls], thickness=2)
-            image = cv2.putText(image, f"{color_name[cls]}", (bx, by - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color=color_dict[cls])
+            image = cv2.putText(image, f"{color_name[cls]} {conf:.2f}", (bx, by - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color=color_dict[cls], thickness=2)
+
+            det["class"].append(cls)
+            det["class_name"].append(color_name[cls])
+            det["centroid_x"].append(cx)
+            det["centroid_y"].append(cy)
+            det["box_width"].append(bw)
+            det["box_height"].append(bh)
+            det["confidence"].append(conf)
 
         results["detections"].append(len(boxes))
+
         etime = (time_ns() - dtime) / 1000000000
         print(f"\tDetected from image in {etime:.2f}s")
-        
+
+        det = pd.DataFrame(det)
+        det.to_csv(output_dir.joinpath(f"{image_path.stem}.csv").as_posix(), index=False)
+
         results["time"].append(etime)
 
         tp = np.sum(cv2.bitwise_and(dplot, plots))
