@@ -2,7 +2,7 @@ import pathlib as pl
 
 from ultralytics import YOLO
 
-MODEL_ROOT = pl.Path(r"E:\Git\ThereGoesMangoes\model\_wet_train")
+MODEL_ROOT = pl.Path(r"E:\Git\ThereGoesMangoes\model\_train")
 
 for msize in ["nano", "small", "medium", "large"]:
     for imgsz in [64, 128, 256, 512, 640, 1024]:
@@ -25,11 +25,11 @@ for msize in ["nano", "small", "medium", "large"]:
 
         print("Validating with validation `val` dataset")
         metrics = MODEL.val(
-            data=r"E:\Git\WetThereGoesMangoesDataset\yolo_wet_mango_detection_2.yaml",
+            data=r"E:\Git\ThereGoesMangoesDataset\yolo_mango_detection_2.yaml",
             imgsz=imgsz,
-            batch=10,
+            batch=1,
             split="val",
-            project="post",
+            project="post/_train",
             name=f"{msize}-{imgsz}-val",
             exist_ok=True,
             device="cpu"
@@ -39,12 +39,14 @@ for msize in ["nano", "small", "medium", "large"]:
 
         print("Validating with testing `test` dataset")
         metrics = MODEL.val(
-            data=r"E:\Git\WetThereGoesMangoesDataset\yolo_wet_mango_detection_2.yaml",
+            data=r"E:\Git\ThereGoesMangoesDataset\yolo_mango_detection_2.yaml",
             imgsz=imgsz,
-            batch=10,
+            batch=1,
             split="test",
-            project="post",
-            name=f"{msize}-{imgsz}-test"
+            project="post/_train",
+            name=f"{msize}-{imgsz}-test",
+            exist_ok=True,
+            device="cpu"
         )
 
         print(metrics.box.maps)
